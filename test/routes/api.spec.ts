@@ -2,6 +2,7 @@ import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 import * as mocha from 'mocha';
 import app from '../../src/app';
+import {removeAllStreets} from "../../src/service/street";
 
 chai.use(chaiHttp);
 
@@ -27,8 +28,9 @@ describe('apiRoute', () => {
     const response = await chai.request(app).post(`/api/street`).send(streetBodyPayload);
     expect(response.status).to.be.equal(201);
   });
-  it('GET /api/closest should respond with 200 status and closest streets list', async () => {
+  it('should respond with 200 status and closest streets list', async () => {
     const response = await chai.request(app).get('/api/closest?x=1&y=1');
     expect(response.status).to.be.equal(200);
+    expect(response.body).to.deep.include({ closestStreets: [{ streetName: 'TestStreet1', distance: 0.7071067811865476 }] });
   });
 });
