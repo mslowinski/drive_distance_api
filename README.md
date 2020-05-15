@@ -32,7 +32,7 @@ To ran unit test on local machine just run below commands:
 yarn pretest
 yarn test
 ```
-#cURL
+# cURL - sample request
 - street
 ```
 curl --location --request POST 'http://localhost:3000/api/street' \
