@@ -9,12 +9,14 @@ export const getApi = async (req: Request, res: Response) => {
 
 export const closest = async (req: Request, res: Response, next: NextFunction) => {
   const { x, y } = req.query;
+  const convertedX = Number(x.toString().replace(',','.'));
+  const convertedY = Number(y.toString().replace(',','.'));
   if (!x || !y) {
     APILogger.logger.error(`[GET] [/api/closest] Missing query params`);
     return res.status(404).send('Missing param') };
 
   try {
-    const closestStreets =  await findClosestStreet(Number(x), Number(y));
+    const closestStreets =  await findClosestStreet(convertedX, convertedY);
     return res.status(200).send({ closestStreets });
   } catch (error) {
     next(error);
